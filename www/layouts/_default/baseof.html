@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {{ with .Description }}<meta name="description" content="{{ . }}">{{ end }}
+        {{ .Hugo.Generator }}
+
+        <title>{{ block "title" . }}
+            {{- with .Title }}{{ . }} | {{ end }}{{ .Site.Title -}}
+        {{ end }}</title>
+
+        {{ if .RSSLink }}
+            <link href="{{ .RSSLink }}" title="{{ .Site.Title }}" type="application/rss+xml" rel="alternate">
+        {{ end }}
+
+        <link rel="stylesheet" href="https://unpkg.com/sanitize.css@5.0.0/sanitize.css">
+        <link rel="stylesheet" href="{{ "app.css" | absURL }}">
+
+    </head>
+    <body>
+
+        <div class="container">
+
+            <header class="header" role="banner">
+                <a href="{{ .Site.BaseURL }}"><strong>{{ .Site.Title }}</strong></a>
+            </header>
+
+            <main class="main" role="main">
+                {{ block "main" . }}{{ end }}
+            </main>
+
+            <footer class="footer">
+                <p>&copy; Copyright {{ now.Format "2006" }} Christopher Geary</p>
+            </footer>
+
+        </div>
+
+        <script src="https://unpkg.com/lunr@2.1.5/lunr.js"></script>
+        <script>
+
+            var idx, bookmarks;
+
+            fetch('/search.json')
+                .then(function (response) { return response.json() })
+                .then(function (data) {
+                    idx = lunr(function () {
+                        this.ref('id')
+                        this.field('type')
+                        this.field('content')
+                        data.forEach(function (bookmark) {
+                            console.log(bookmark);
+                            this.add(bookmark)
+                        }, this)
+                    })
+                })
+                .catch(function (err) { console.error(err) });
+
+        </script>
+
+    </body>
+</html>

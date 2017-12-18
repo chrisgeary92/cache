@@ -1,0 +1,7 @@
+baseURL = "/"
+languageCode = "en-gb"
+title = "Cache"
+
+disableKinds = ["RSS"]
+enableRobotsTXT = true
+disableAliases = true

@@ -1,0 +1,15 @@
+{
+  "name": "cache-hugo",
+  "private": true,
+  "scripts": {
+    "build": "node ./src/index.js && hugo --source ./www",
+    "build:preview": "node ./src/index.js && hugo --buildDrafts --buildFuture --source ./www"
+  },
+  "author": "Christopher Geary",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.171.0",
+    "del": "^3.0.0",
+    "js-yaml": "^3.10.0"
+  }
+}

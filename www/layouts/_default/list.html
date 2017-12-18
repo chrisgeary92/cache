@@ -1,0 +1,16 @@
+{{ define "main" }}
+    
+    <ul>
+        {{ range .Paginator.Pages }}
+            <li>
+                <a href="{{ .Params.content }}">{{ .Params.content }}</a>
+                {{ with .Params.tags }}
+                    <small>{{ delimit . ", " }}</small>
+                {{ end }}
+            </li>
+        {{ end }}
+    </ul>
+
+    {{ template "_internal/pagination.html" . }}
+
+{{ end }}
